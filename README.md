@@ -58,6 +58,7 @@ This project implements JWT-based authentication using Django REST Framework and
 
 2. Update your `settings.py`:
 
+```python
 REST_FRAMEWORK = {
 'DEFAULT_AUTHENTICATION_CLASSES': (
 'rest_framework_simplejwt.authentication.JWTAuthentication',
@@ -67,8 +68,7 @@ REST_FRAMEWORK = {
 ),
 }
 Add the following endpoints to your urls.py:
-python
-Copier le code
+
 from rest_framework_simplejwt.views import (
 TokenObtainPairView,
 TokenRefreshView,
@@ -78,3 +78,22 @@ urlpatterns = [
 path('users/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
 path('users/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ]
+```
+
+# Authentication Setup
+
+1. Obtain a Token
+   Send a POST request to /api/token/ with the following JSON:
+
+{
+"username": "your_username",
+"password": "your_password"
+} 2. Access Protected Endpoints
+Use the access token in the Authorization header:
+
+Authorization: Bearer <access_token> 3. Refresh Token
+Send a POST request to /api/token/refresh/ with the refresh token:
+
+{
+"refresh": "<refresh_token>"
+}
